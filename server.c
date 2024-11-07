@@ -24,13 +24,13 @@ int main(int argc, char *argv[])
     }
 
     // Setting socket options
-    int enable_reuse = 1;            // Option value to enable address reuse
-    status = setsockopt(             // https://linux.die.net/man/2/setsockopt
-        sockfd,                      // The socket file descriptor to configure
-        SOL_SOCKET,                  // SOL_SOCKET applies options to the socket layer
-        SO_REUSEADDR | SO_REUSEPORT, // The name of the option to set; SO_REUSEADDR
-        &enable_reuse,               // A pointer to the option value
-        sizeof(enable_reuse)         // The size of the option value; necessary to know how much memory to read from optval
+    int enable_reuse = 1;    // Option value to enable address reuse
+    status = setsockopt(     // https://linux.die.net/man/2/setsockopt
+        sockfd,              // The socket file descriptor to configure
+        SOL_SOCKET,          // SOL_SOCKET applies options to the socket layer
+        SO_REUSEADDR,        // The name of the option to set; SO_REUSEADDR
+        &enable_reuse,       // A pointer to the option value
+        sizeof(enable_reuse) // The size of the option value; necessary to know how much memory to read from optval
     );
     if (status < 0) {
         perror("setsockopt failed");
@@ -56,8 +56,8 @@ int main(int argc, char *argv[])
 
     // Listen for connections on the socket we just created
     status = listen( // https://linux.die.net/man/2/listen
-        sockfd,      // We know what this is by now
-        3            // Maximum number of pending connections in the queue
+        sockfd, // We know what this is by now
+        3 // Maximum number of pending connections in the queue
     );
     if (status < 0) {
         perror("listen failed");
@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
     printf("Server is listening on port %d...\n", PORT);
 
     // Accept incoming connections and wait for new client requests, which will create a new socket for communication while `sockfd` keeps listening
-    int addrlen = sizeof(address);  // Length of the address structure
+    int addrlen = sizeof(address); // Length of the address structure
     int newsock = accept(           // https://linux.die.net/man/2/accept
         sockfd,                     // The listening socket file descriptor
         (struct sockaddr*)&address, // Pointer to the address structure to store client information
@@ -95,6 +95,13 @@ int main(int argc, char *argv[])
     printf("Received from client: %s\n", buffer);
 
     // Send a response to the client
+    char* http_response =
+        "HTTP/1.1 200 OK\r\n"          // Status line
+        "Content-Type: text/plain\r\n" // Content-Type header
+        "Content-Length: 18\r\n"       // Content-Length header
+        "\r\n"                         // Blank line to end headers
+        "Hello from server";           // Response body
+
     char* hello = "Hello from server"; // Response message to be sent to the client
     status = send(                     // https://linux.die.net/man/2/send
         newsock,                       // Socket file descriptor for the client connection

@@ -1,13 +1,3 @@
-// What we are doing? https://stackoverflow.com/a/176477
-// ✓ Get your basic TCP sockets layer running (listen on port/ports, accept client connections and send/receive data).
-// Implement a buffered reader so that you can read requests one line (delimited by CRLF) at a time.
-// Read the very first line. Parse out the method, the request version and the path.
-// Implement header parsing for the "Header: value" syntax. Don't forget unfolding folded headers.
-// Check the request method, content type and content size to determine how/if the body will be read.
-// Implement decoding of content based on content type.
-// If you're going to support HTTP 1.1, implement things like "100 Continue", keep-alive, chunked transfer.
-// Add robustness/security measures like detecting incomplete requests, limiting max number of clients etc.
-
 #include <netinet/in.h>
 #include <stdio.h>
 #include <stdlib.h>

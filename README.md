@@ -2,14 +2,17 @@
 
 A low level http learning experience in C.
 
-Run server:
-
+Run the server:
 ```sh
 make server && ./server
 ```
 
-Test:
+Run the Client:
+```sh
+make client && ./client
+```
 
+Test:
 ```sh
 curl -v http://localhost:8080
 ```
@@ -17,6 +20,7 @@ curl -v http://localhost:8080
 ## Roadmap:
 
 - [x] Get basic TCP sockets running (listen on ports, accept connections, send/receive data).
+- [x] Create a simple client to connect to the server, send messages, and process responses.
 - [ ] Build a buffered reader to read requests line-by-line (using CRLF as a delimiter).
 - [ ] Parse the first request line to get the method, version, and path.
 - [ ] Handle headers in "Header: value" format, including unfolding folded headers.
